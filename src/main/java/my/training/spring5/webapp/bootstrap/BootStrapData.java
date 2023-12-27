@@ -2,8 +2,10 @@ package my.training.spring5.webapp.bootstrap;
 
 import my.training.spring5.webapp.domain.Author;
 import my.training.spring5.webapp.domain.Book;
+import my.training.spring5.webapp.domain.Publisher;
 import my.training.spring5.webapp.repository.AuthorRepository;
 import my.training.spring5.webapp.repository.BookRepository;
+import my.training.spring5.webapp.repository.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +13,14 @@ import org.springframework.stereotype.Component;
 public class BootStrapData implements CommandLineRunner {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
     
-    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootStrapData(AuthorRepository authorRepository,
+                         BookRepository bookRepository,
+                         PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
     
     @Override
@@ -35,7 +41,23 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(franko);
         bookRepository.save(boryslav);
         
+        Publisher vilnaUkraina = new Publisher(
+                "Vilna Ukraina",
+                "2 Naukova st.",
+                "Lviv",
+                "Lviv",
+                "79000");
+        Publisher ababa = new Publisher(
+                "A-BABA-GALA-MAGA",
+                "15 Somewhere st.",
+                "Kyiv",
+                "Kyiv",
+                "5100");
+        publisherRepository.save(vilnaUkraina);
+        publisherRepository.save(ababa);
+        
         System.out.println("Started in Bootstrap");
         System.out.println("Number of books : " + bookRepository.count());
+        System.out.println("Amount of publishers : " + publisherRepository.count());
     }
 }
