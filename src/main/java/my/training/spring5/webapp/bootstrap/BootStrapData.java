@@ -25,36 +25,35 @@ public class BootStrapData implements CommandLineRunner {
     
     @Override
     public void run(String... args) throws Exception {
-        Author shevchenko = new Author("Taras", "Shevchenko");
-        Book kobzar = new Book("Kobzar", "000001");
-        shevchenko.getBooks().add(kobzar);
-        kobzar.getAuthors().add(shevchenko);
-        
-        authorRepository.save(shevchenko);
-        bookRepository.save(kobzar);
-        
-        Author franko = new Author("Ivan", "Franko");
-        Book boryslav = new Book("Boryslav is laughing", "000002");
-        franko.getBooks().add(boryslav);
-        boryslav.getAuthors().add(franko);
-        
-        authorRepository.save(franko);
-        bookRepository.save(boryslav);
-        
         Publisher vilnaUkraina = new Publisher(
                 "Vilna Ukraina",
                 "2 Naukova st.",
                 "Lviv",
                 "Lviv",
                 "79000");
-        Publisher ababa = new Publisher(
-                "A-BABA-GALA-MAGA",
-                "15 Somewhere st.",
-                "Kyiv",
-                "Kyiv",
-                "5100");
         publisherRepository.save(vilnaUkraina);
-        publisherRepository.save(ababa);
+        
+        Author shevchenko = new Author("Taras", "Shevchenko");
+        Book kobzar = new Book("Kobzar", "000001");
+        shevchenko.getBooks().add(kobzar);
+        kobzar.getAuthors().add(shevchenko);
+        kobzar.setPublisher(vilnaUkraina);
+        vilnaUkraina.getBooks().add(kobzar);
+        
+        authorRepository.save(shevchenko);
+        bookRepository.save(kobzar);
+        publisherRepository.save(vilnaUkraina);
+        
+        Author franko = new Author("Ivan", "Franko");
+        Book boryslav = new Book("Boryslav is laughing", "000002");
+        franko.getBooks().add(boryslav);
+        boryslav.getAuthors().add(franko);
+        boryslav.setPublisher(vilnaUkraina);
+        vilnaUkraina.getBooks().add(boryslav);
+        
+        authorRepository.save(franko);
+        bookRepository.save(boryslav);
+        publisherRepository.save(vilnaUkraina);
         
         System.out.println("Started in Bootstrap");
         System.out.println("Number of books : " + bookRepository.count());
